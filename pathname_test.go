@@ -81,6 +81,28 @@ func TestPathname_IsRelative(t *testing.T) {
 	}
 }
 
+func TestPathname_IsRoot(t *testing.T) {
+	var p *Pathname
+	assert.False(t, p.IsRoot())
+
+	testcases := []struct {
+		p        Pathname
+		expected bool
+	}{
+		{NewPathname(""), false},
+		{NewPathname("/"), true},
+		{NewPathname("/path"), false},
+		{NewPathname("/."), false},
+		{NewPathname("/path/.."), false},
+	}
+
+	for i, tc := range testcases {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			assert.Equal(t, tc.expected, tc.p.IsRoot())
+		})
+	}
+}
+
 func TestPathname_IsExist(t *testing.T) {
 	var p *Pathname
 	assert.False(t, p.IsExist())

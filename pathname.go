@@ -42,6 +42,13 @@ func (p *Pathname) IsRelative() bool {
 	return p.path[0] != '/'
 }
 
+func (p *Pathname) IsRoot() bool {
+	if p == nil || p.path == "" {
+		return false
+	}
+	return p.path == "/"
+}
+
 func (p *Pathname) IsExist() bool {
 	if p == nil {
 		return false
